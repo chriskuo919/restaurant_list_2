@@ -3,7 +3,7 @@ const router = express.Router()
 const Restaurant = require("../../models/Restaurant")
 
 router.get("/", (req, res) => {
-  Restaurant
+  return Restaurant
     .find()
     .lean()
     .then(restaurantsData => res.render("index", { restaurantsData }))
@@ -12,7 +12,7 @@ router.get("/", (req, res) => {
 
 router.get("/search", (req, res) => {
   if (!req.query.keywords) {
-    res.redirect("/")
+    return res.redirect("/")
   }
 
   const keywords = req.query.keywords
@@ -35,7 +35,7 @@ router.get("/search", (req, res) => {
       sortingMethod = { location: 'asc' }
       break;
   }
-  Restaurant
+  return Restaurant
     .find()
     .lean()
     .sort(sortingMethod)
