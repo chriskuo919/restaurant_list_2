@@ -3,26 +3,26 @@ const router = express.Router()
 const Restaurant = require("../../models/Restaurant")
 
 router.get("/new", (req, res) => {
-  res.render("new")
+  return res.render("new")
 })
 
 router.get("/:restaurantId", (req, res) => {
   const { restaurantId } = req.params
-  Restaurant.findById(restaurantId)
+  return Restaurant.findById(restaurantId)
     .lean()
     .then(restaurantData => res.render("show", { restaurantData }))
     .catch(err => console.log(err))
 })
 
 router.post("/", (req, res) => {
-  Restaurant.create(req.body)
+  return Restaurant.create(req.body)
     .then(() => res.redirect("/"))
     .catch(err => console.log(err))
 })
 
 router.get("/:restaurantId/edit", (req, res) => {
   const { restaurantId } = req.params
-  Restaurant.findById(restaurantId)
+  return Restaurant.findById(restaurantId)
     .lean()
     .then(restaurantData => res.render("edit", { restaurantData }))
     .catch(err => console.log(err))
@@ -30,14 +30,14 @@ router.get("/:restaurantId/edit", (req, res) => {
 
 router.put("/:restaurantId", (req, res) => {
   const { restaurantId } = req.params
-  Restaurant.findByIdAndUpdate(restaurantId, req.body)
+  return Restaurant.findByIdAndUpdate(restaurantId, req.body)
     .then(() => res.redirect(`/restaurants/${restaurantId}`))
     .catch(err => console.log(err))
 })
 
 router.delete("/:restaurantId", (req, res) => {
   const { restaurantId } = req.params
-  Restaurant.findByIdAndDelete(restaurantId)
+  return Restaurant.findByIdAndDelete(restaurantId)
     .then(() => res.redirect("/"))
     .catch(err => console.log(err))
 })
